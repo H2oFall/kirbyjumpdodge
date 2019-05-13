@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <script src="p5.min.js"></script>
+  </head>
+  <body>
+    
+    <script>
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var ball = new ball(); //create global object
+    var ball = new ball();
+    function setup(){
+        createCanvas(w,h);
+      }
+      
+      function draw(){
+        background(255);
+        rect(50,50,50,50)
+        ball.show();
+        ball.move();
+        
+        ball.show();
+        ball.move();
+      }
+      
+      function ball() {
+        this.x = 100;
+        this.y = 100;
+        this.show = function() {
+          fill(color('red'));
+          ellipse(this.x,this.y,50,50);
+        };
+        this.move = function(){
+        if((keyIsDown(65)) && (this.x > 0 + 50)){
+          this.x -= 10;
+        }
+        if((keyIsDown(68)) && (this.x < w-50)){
+          this.x += 10;
+        }
+        if((keyIsDown(83)) && (this.y < h-50)){
+          this.y += 10;
+        }
+        if((keyIsDown(87)) && (this.y > 0 + 50)){
+          this.y -= 10;
+        }
+      };
+      
+      function ball() {
+        this.x = 100;
+        this.y = 100;
+        this.show = function() {
+          fill(color('red'));
+          ellipse(this.x,this.y,50,50);
+        };
+        this.move = function(){
+        if((keyIsDown(65)) && (this.x > 0 + 50)){
+          this.x -= 10;
+        }
+        if((keyIsDown(68)) && (this.x < w-50)){
+          this.x += 10;
+        }
+        if((keyIsDown(83)) && (this.y < h-50)){
+          this.y += 10;
+        }
+        if((keyIsDown(87)) && (this.y > 0 + 50)){
+          this.y -= 10;
+        }
+      };
+    }
+    </script>
+  </body>
+</html>

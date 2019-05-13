@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <script src="p5.min.js"></script>
+    <script src="jumper.js"></script>
+    <script src="barrier.js"></script>
+        <script src = "plat.js"></script>
+        <script src = "p5.sound.js"></script>
+        <script src = "p5.sound.min.js"></script>
+    <script src = "p5.collide2d.min.js"></script>
+    
+    
+    <style>
+     body{
+       
+        overflow:hidden;
+        margin:0;
+        padding:0;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <script>
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var jumper = new jumper();
+    var barrier = new barrier();
+    var plat = new plat();
+    var platform = new platform();
+    var hit = false;
+    var hit1 = false;
+    var hit2 = false;
+    var score = 0;
+    var imgback;  
+    var death;
+    function preload(){
+      platimg = loadImage('platform.png')
+        img = loadImage('kirby.png');
+        imgback = loadImage('kirbyback.jpg');
+        soundFormats('mp3', 'ogg');
+        fireimg = loadImage('fireball.png');
+        jump = loadSound('jumpsound.mp3');
+  death = loadSound('kirbydeath.mp3');
+  firesound = loadSound('fireball.mp3')
+      }
+
+    function setup() {
+      createCanvas(w,h);
+
+    }
+    
+    function draw() {
+      background(imgback);
+      fill(0);
+      textSize(50);
+      textAlign(CENTER);
+      text(score,50,50);
+      textSize(30);
+      text("Left arrow to go left , right arrow to go right , spacebar to jump",450,100);
+      text("avoid the fireball!", 150, 130);
+      plat.show();
+      platform.show();
+      jumper.show();
+      jumper.update();
+      barrier.show();
+      barrier.update();
+      hit = collideRectRect(barrier.x,barrier.y,barrier.width,barrier.height,jumper.x, jumper.y,40,40);
+      hit1 = collideRectRect(plat.x,plat.y,plat.width,plat.height,jumper.x, jumper.y,50,50);
+      hit2 = collideRectRect(platform.x,platform.y,platform.width,platform.height,jumper.x, jumper.y,50,50);
+      if (barrier.x <= 0-100) {
+        firesound.setVolume(0.1);
+        firesound.play();
+     score += 1;
+     barrier.x = w + barrier.width;
+     barrier.y = Math.floor(Math.random() * h)-10;
+     barrier.show();
+     barrier.update();
+     stop();
+}
+      if (hit === true) {
+        death.setVolume(0.1);
+        death.play();
+        noLoop();
+      }
+      if (hit1 === true) {
+        
+        jumper.velocity = 0;
+        jumper.velocity = -1.5;
+      }
+      if (hit2 === true) {
+        jumper.velocity = 0;
+        jumper.velocity = -1.5;
+      }
+      
+    }
+    function keyPressed() {
+      if(keyCode === 82) {
+       
+        jumper.x = 50;
+        jumper.y = 0;
+        barrier.x = w + barrier.width;
+        barrier.y = Math.floor(Math.random() * h)-10;
+        barrier.velocity = 1;
+        score = 0
+      }
+      if(keyCode === 32) {
+        jumper.up();
+        jump.setVolume(0.05);
+        jump.play();
+      }
+    }
+    </script>
+  </body>
+</html>
